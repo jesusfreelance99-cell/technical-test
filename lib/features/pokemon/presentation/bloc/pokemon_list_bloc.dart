@@ -71,7 +71,7 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
 
     final failureOrPokemon = await searchPokemon(query);
     failureOrPokemon.fold(
-      (failure) => emit(const PokemonListError(message: 'Pokemon nout found')),
+      (failure) => emit(const PokemonListError(message: 'Pokemon not found')),
       (pokemon) {
         emit(PokemonListLoaded(pokemons: [pokemon], hasReachedMax: true));
       },

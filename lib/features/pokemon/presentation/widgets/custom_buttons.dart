@@ -26,6 +26,7 @@ class CustomPrincipalButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final textStyle = Theme.of(context).textTheme;
     return SizedBox(
       width: width ?? size.width * .8,
       height: height ?? size.height * .06,
@@ -43,6 +44,9 @@ class CustomPrincipalButton extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 textScaler: TextScaler.noScaling,
+                style: textStyle.bodyMedium?.copyWith(
+                  color: colorText ?? ColorPaletteTheme.whiteColor,
+                ),
               ),
       ),
     );
@@ -93,7 +97,7 @@ class CustomButtonWithImageOutline extends StatelessWidget {
               foregroundColor: WidgetStatePropertyAll(colorText),
 
               side: WidgetStatePropertyAll(
-                BorderSide(color: Colors.white, width: 1.5),
+                BorderSide(color: ColorPaletteTheme.whiteColor, width: 1.5),
               ),
               shape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(
@@ -156,6 +160,7 @@ class CustomPrincipalButtonWithBlurEffect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final textStyle = Theme.of(context).textTheme;
     return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -183,6 +188,9 @@ class CustomPrincipalButtonWithBlurEffect extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       textScaler: TextScaler.noScaling,
+                      style: textStyle.bodyMedium?.copyWith(
+                        color: colorText ?? ColorPaletteTheme.whiteColor,
+                      ),
                     ),
             ),
           ),
@@ -287,7 +295,7 @@ class ButtonPlusComponent extends StatelessWidget {
           ),
           child: Center(
             child: Icon(
-              icon ?? FluentIcons.add_12_regular,
+              icon ?? FluentIcons.add_12_filled,
               color: colorButton ?? ColorPaletteTheme.primaryColor,
               size: 20,
             ),

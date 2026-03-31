@@ -32,4 +32,6 @@ class ColorPaletteTheme {
 
   static const Color transparent = Colors.transparent;
   static const Color greyText = Color(0xffa6a6a8);
+
+  static const Color orangeColor = Color(0xffff5e00);
 }
