@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemonapp/core/theme/main_theme_export.dart';
 import 'package:pokemonapp/features/pokemon/domain/entities/pokemon_entity.dart';
@@ -12,28 +15,22 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
+    final normalColor = _getTypeColor(
+      pokemon.types.isNotEmpty ? pokemon.types.first : 'normal',
+    );
+    final ioS = Platform.isIOS;
     return Scaffold(
-      backgroundColor: ColorPaletteTheme.black, // Dark theme detail
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: ColorPaletteTheme.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(
-            FluentIcons.arrow_left_24_filled,
-            color: ColorPaletteTheme.whiteColor,
+          icon: Icon(
+            ioS ? CupertinoIcons.back : FluentIcons.arrow_left_24_filled,
+            color: normalColor,
+            size: 30,
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              FluentIcons.heart_24_filled,
-              color: ColorPaletteTheme.whiteColor,
-            ),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Stack(
         children: [
@@ -47,7 +44,7 @@ class DetailScreen extends StatelessWidget {
                     _getTypeColor(
                       pokemon.types.isNotEmpty ? pokemon.types.first : 'normal',
                     ).withValues(alpha: 0.5),
-                    ColorPaletteTheme.black,
+                    ColorPaletteTheme.primaryColor,
                   ],
                   stops: const [0.0, 0.4],
                 ),
@@ -71,7 +68,7 @@ class DetailScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   textScaler: TextScaler.noScaling,
                   style: textStyle.displaySmall?.copyWith(
-                    color: ColorPaletteTheme.whiteColor,
+                    color: normalColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -86,9 +83,7 @@ class DetailScreen extends StatelessWidget {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: ColorPaletteTheme.whiteColor.withValues(
-                        alpha: 0.05,
-                      ),
+                      color: normalColor.withValues(alpha: 0.05),
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30),
@@ -98,11 +93,16 @@ class DetailScreen extends StatelessWidget {
                       length: 3,
                       child: Column(
                         children: [
-                          const TabBar(
-                            indicatorColor: ColorPaletteTheme.whiteColor,
-                            labelColor: ColorPaletteTheme.whiteColor,
+                          TabBar(
+                            indicatorColor: normalColor,
+                            labelColor: normalColor,
                             unselectedLabelColor: ColorPaletteTheme.greyText,
-                            tabs: [
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            dividerColor: normalColor,
+                            labelStyle: textStyle.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            tabs: const [
                               Tab(text: 'About'),
                               Tab(text: 'Stats'),
                               Tab(text: 'Evolutions'),
@@ -112,7 +112,7 @@ class DetailScreen extends StatelessWidget {
                             child: TabBarView(
                               children: [
                                 _buildAboutTab(textStyle),
-                                _buildStatsTab(textStyle),
+                                _buildStatsTab(textStyle, normalColor),
                                 Center(
                                   child: Text(
                                     'Coming soon...',
@@ -121,7 +121,7 @@ class DetailScreen extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                     textScaler: TextScaler.noScaling,
                                     style: textStyle.bodyMedium?.copyWith(
-                                      color: ColorPaletteTheme.greyText,
+                                      color: ColorPaletteTheme.black,
                                     ),
                                   ),
                                 ),
@@ -172,13 +172,13 @@ class DetailScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildInfoColumn(
-                'Weight',
+                'Peso',
                 '${pokemon.weight / 10} kg',
                 FluentIcons.scales_24_filled,
                 textStyle,
               ),
               _buildInfoColumn(
-                'Height',
+                'Altura',
                 '${pokemon.height / 10} m',
                 FluentIcons.ruler_24_filled,
                 textStyle,
@@ -218,10 +218,7 @@ class DetailScreen extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
           textScaler: TextScaler.noScaling,
-          style: textStyle.titleLarge?.copyWith(
-            color: ColorPaletteTheme.whiteColor,
-            fontWeight: FontWeight.bold,
-          ),
+          style: textStyle.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 4),
         Text(
@@ -238,23 +235,28 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatsTab(TextTheme textStyle) {
+  Widget _buildStatsTab(TextTheme textStyle, Color color) {
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
         children: [
-          _buildStatRow('HP', pokemon.hp, textStyle),
-          _buildStatRow('Attack', pokemon.attack, textStyle),
-          _buildStatRow('Defense', pokemon.defense, textStyle),
-          _buildStatRow('Sp. Atk', pokemon.specialAttack, textStyle),
-          _buildStatRow('Sp. Def', pokemon.specialDefense, textStyle),
-          _buildStatRow('Speed', pokemon.speed, textStyle),
+          _buildStatRow('HP', pokemon.hp, textStyle, color),
+          _buildStatRow('Attack', pokemon.attack, textStyle, color),
+          _buildStatRow('Defense', pokemon.defense, textStyle, color),
+          _buildStatRow('Sp. Atk', pokemon.specialAttack, textStyle, color),
+          _buildStatRow('Sp. Def', pokemon.specialDefense, textStyle, color),
+          _buildStatRow('Speed', pokemon.speed, textStyle, color),
         ],
       ),
     );
   }
 
-  Widget _buildStatRow(String name, int value, TextTheme textStyle) {
+  Widget _buildStatRow(
+    String name,
+    int value,
+    TextTheme textStyle,
+    Color color,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -267,9 +269,7 @@ class DetailScreen extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               textScaler: TextScaler.noScaling,
-              style: textStyle.bodyMedium?.copyWith(
-                color: ColorPaletteTheme.greyText,
-              ),
+              style: textStyle.bodyMedium,
             ),
           ),
           SizedBox(
@@ -281,7 +281,6 @@ class DetailScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               textScaler: TextScaler.noScaling,
               style: textStyle.titleMedium?.copyWith(
-                color: ColorPaletteTheme.whiteColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -293,9 +292,7 @@ class DetailScreen extends StatelessWidget {
                 alpha: 0.1,
               ),
               valueColor: AlwaysStoppedAnimation<Color>(
-                value > 50
-                    ? ColorPaletteTheme.successColor
-                    : ColorPaletteTheme.errorColor,
+                value > 50 ? color : ColorPaletteTheme.greyText,
               ),
             ),
           ),

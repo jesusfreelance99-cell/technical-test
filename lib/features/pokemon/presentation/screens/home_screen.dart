@@ -69,9 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
           textScaler: TextScaler.noScaling,
-          style: textStyle.displaySmall!.copyWith(
+          style: textStyle.displayMedium!.copyWith(
             color: ColorPaletteTheme.primaryColor,
             fontWeight: FontWeight.bold,
+            fontSize: 25,
           ),
         ),
       ),
@@ -85,14 +86,17 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(color: ColorPaletteTheme.primaryColor),
               decoration: InputDecoration(
                 hintText: 'Search Pokemon...',
-                hintStyle: TextStyle(color: ColorPaletteTheme.greyText),
+                hintStyle: TextStyle(
+                  color: ColorPaletteTheme.primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
                 prefixIcon: const Icon(
                   FluentIcons.search_24_filled,
-                  color: ColorPaletteTheme.greyText,
+                  color: ColorPaletteTheme.primaryColor,
                 ),
                 filled: true,
-                fillColor: ColorPaletteTheme.primaryColor.withValues(
-                  alpha: 0.1,
+                fillColor: ColorPaletteTheme.primaryColorLight.withValues(
+                  alpha: 0.7,
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(

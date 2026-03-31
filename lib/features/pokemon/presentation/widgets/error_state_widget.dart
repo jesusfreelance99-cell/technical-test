@@ -23,7 +23,7 @@ class ErrorStateWidget extends StatelessWidget {
           const Icon(
             FluentIcons.warning_24_filled,
             size: 64,
-            color: ColorPaletteTheme.errorColor,
+            color: ColorPaletteTheme.orangeColor,
           ),
           const SizedBox(height: 16),
           Text(
@@ -32,15 +32,15 @@ class ErrorStateWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
             textScaler: TextScaler.noScaling,
-            style: textStyle.titleMedium?.copyWith(
-              color: ColorPaletteTheme.errorColor,
+            style: textStyle.headlineMedium?.copyWith(
+              color: ColorPaletteTheme.orangeColor,
             ),
           ),
           const SizedBox(height: 24),
           CustomPrincipalButton(
             text: 'Volver a intentar',
             isLoading: false,
-            colorButton: ColorPaletteTheme.whiteColor.withValues(alpha: 0.1),
+            colorButton: ColorPaletteTheme.orangeColor,
             colorText: ColorPaletteTheme.whiteColor,
             onPressed: onRetry,
           ),

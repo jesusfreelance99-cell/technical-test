@@ -26,7 +26,7 @@ class EmptyStateWidget extends StatelessWidget {
             textAlign: TextAlign.center,
             textScaler: TextScaler.noScaling,
             style: textStyle.titleLarge?.copyWith(
-              color: ColorPaletteTheme.whiteColor,
+              color: ColorPaletteTheme.accentColor,
             ),
           ),
         ],
