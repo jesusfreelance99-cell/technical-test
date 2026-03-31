@@ -82,12 +82,7 @@ void main() {
     test(
       'should return PokemonModel when the response code is 200 (success)',
       () async {
-        when(
-          () => mockDio.get(
-            any(),
-            queryParameters: any(named: 'queryParameters'),
-          ),
-        ).thenAnswer(
+        when(() => mockDio.get(any())).thenAnswer(
           (_) async => Response(
             data: tJsonResponse,
             statusCode: 200,
@@ -104,12 +99,7 @@ void main() {
     test(
       'should throw a ServerException when the response code is 404',
       () async {
-        when(
-          () => mockDio.get(
-            any(),
-            queryParameters: any(named: 'queryParameters'),
-          ),
-        ).thenThrow(
+        when(() => mockDio.get(any())).thenThrow(
           DioException(
             requestOptions: RequestOptions(path: ''),
             response: Response(

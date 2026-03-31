@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemonapp/core/theme/main_theme_export.dart';
 import 'package:pokemonapp/features/pokemon/domain/entities/pokemon_entity.dart';
@@ -18,12 +19,15 @@ class DetailScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon: const Icon(
+            FluentIcons.arrow_left_24_filled,
+            color: Colors.white,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.favorite_border, color: Colors.white),
+            icon: const Icon(FluentIcons.heart_24_filled, color: Colors.white),
             onPressed: () {},
           ),
         ],
@@ -59,9 +63,8 @@ class DetailScreen extends StatelessWidget {
                 ),
                 Text(
                   pokemon.name.toUpperCase(),
-                  style: textStyle.headlineMedium?.copyWith(
+                  style: textStyle.displaySmall?.copyWith(
                     color: Colors.white,
-                    fontSize: 32,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -69,7 +72,7 @@ class DetailScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: pokemon.types
-                      .map((t) => _buildTypeBadge(t))
+                      .map((t) => _buildTypeBadge(t, textStyle))
                       .toList(),
                 ),
                 const SizedBox(height: 30),
@@ -99,12 +102,14 @@ class DetailScreen extends StatelessWidget {
                           Expanded(
                             child: TabBarView(
                               children: [
-                                _buildAboutTab(),
-                                _buildStatsTab(),
-                                const Center(
+                                _buildAboutTab(textStyle),
+                                _buildStatsTab(textStyle),
+                                Center(
                                   child: Text(
                                     'Coming soon...',
-                                    style: TextStyle(color: Colors.white54),
+                                    style: textStyle.bodyMedium?.copyWith(
+                                      color: Colors.white54,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -123,7 +128,7 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTypeBadge(String type) {
+  Widget _buildTypeBadge(String type, TextTheme textStyle) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -133,16 +138,15 @@ class DetailScreen extends StatelessWidget {
       ),
       child: Text(
         type.toUpperCase(),
-        style: const TextStyle(
+        style: textStyle.labelMedium?.copyWith(
           color: Colors.white,
-          fontSize: 12,
           fontWeight: FontWeight.bold,
         ),
       ),
     );
   }
 
-  Widget _buildAboutTab() {
+  Widget _buildAboutTab(TextTheme textStyle) {
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
@@ -153,19 +157,24 @@ class DetailScreen extends StatelessWidget {
               _buildInfoColumn(
                 'Weight',
                 '${pokemon.weight / 10} kg',
-                Icons.fitness_center,
+                FluentIcons.scales_24_filled,
+                textStyle,
               ),
               _buildInfoColumn(
                 'Height',
                 '${pokemon.height / 10} m',
-                Icons.height,
+                FluentIcons.ruler_24_filled,
+                textStyle,
               ),
             ],
           ),
           const SizedBox(height: 30),
-          const Text(
+          Text(
             'A beautiful Pokemon from the Kanto region.', // Placeholder description
-            style: TextStyle(color: Colors.white70, fontSize: 16, height: 1.5),
+            style: textStyle.bodyLarge?.copyWith(
+              color: Colors.white70,
+              height: 1.5,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -173,45 +182,49 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoColumn(String title, String value, IconData icon) {
+  Widget _buildInfoColumn(
+    String title,
+    String value,
+    IconData icon,
+    TextTheme textStyle,
+  ) {
     return Column(
       children: [
         Icon(icon, color: Colors.white54),
         const SizedBox(height: 8),
         Text(
           value,
-          style: const TextStyle(
+          style: textStyle.titleLarge?.copyWith(
             color: Colors.white,
-            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           title,
-          style: const TextStyle(color: Colors.white54, fontSize: 14),
+          style: textStyle.bodyMedium?.copyWith(color: Colors.white54),
         ),
       ],
     );
   }
 
-  Widget _buildStatsTab() {
+  Widget _buildStatsTab(TextTheme textStyle) {
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
         children: [
-          _buildStatRow('HP', pokemon.hp),
-          _buildStatRow('Attack', pokemon.attack),
-          _buildStatRow('Defense', pokemon.defense),
-          _buildStatRow('Sp. Atk', pokemon.specialAttack),
-          _buildStatRow('Sp. Def', pokemon.specialDefense),
-          _buildStatRow('Speed', pokemon.speed),
+          _buildStatRow('HP', pokemon.hp, textStyle),
+          _buildStatRow('Attack', pokemon.attack, textStyle),
+          _buildStatRow('Defense', pokemon.defense, textStyle),
+          _buildStatRow('Sp. Atk', pokemon.specialAttack, textStyle),
+          _buildStatRow('Sp. Def', pokemon.specialDefense, textStyle),
+          _buildStatRow('Speed', pokemon.speed, textStyle),
         ],
       ),
     );
   }
 
-  Widget _buildStatRow(String name, int value) {
+  Widget _buildStatRow(String name, int value, TextTheme textStyle) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -220,14 +233,14 @@ class DetailScreen extends StatelessWidget {
             width: 80,
             child: Text(
               name,
-              style: const TextStyle(color: Colors.white54, fontSize: 14),
+              style: textStyle.bodyMedium?.copyWith(color: Colors.white54),
             ),
           ),
           SizedBox(
             width: 40,
             child: Text(
               value.toString(),
-              style: const TextStyle(
+              style: textStyle.titleMedium?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),

@@ -5,6 +5,8 @@ import 'package:pokemonapp/features/pokemon/presentation/bloc/pokemon_list_bloc.
 import 'package:pokemonapp/features/pokemon/presentation/bloc/pokemon_list_event.dart';
 import 'package:pokemonapp/features/pokemon/presentation/bloc/pokemon_list_state.dart';
 import 'package:pokemonapp/features/pokemon/presentation/screens/detail_screen.dart';
+import 'package:pokemonapp/features/pokemon/presentation/widgets/empty_state_widget.dart';
+import 'package:pokemonapp/features/pokemon/presentation/widgets/error_state_widget.dart';
 import 'package:pokemonapp/features/pokemon/presentation/widgets/gradient_effect_widget.dart';
 import 'package:pokemonapp/features/pokemon/presentation/widgets/pokemon_card.dart';
 import 'package:shimmer/shimmer.dart';
@@ -48,22 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = Theme.of(context).textTheme;
     return GradientEffectForScreens(
       child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: const Text(
-            'Pokédex',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 28,
-            ),
-          ),
-          centerTitle: true,
-        ),
+        appBar: AppBar(elevation: 0, title: Text('Pokédex'), centerTitle: true),
         body: Column(
           children: [
             // Search Bar
@@ -99,34 +89,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (state is PokemonListLoading) {
                     return _buildShimmerGrid();
                   } else if (state is PokemonListError) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            state.message,
-                            style: const TextStyle(
-                              color: Colors.redAccent,
-                              fontSize: 16,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: () => context
-                                .read<PokemonListBloc>()
-                                .add(const GetPokemonsEvent(isRefresh: true)),
-                            child: const Text('Retry'),
-                          ),
-                        ],
+                    return ErrorStateWidget(
+                      message: state.message,
+                      onRetry: () => context.read<PokemonListBloc>().add(
+                        const GetPokemonsEvent(isRefresh: true),
                       ),
                     );
                   } else if (state is PokemonListLoaded) {
                     if (state.pokemons.isEmpty) {
-                      return const Center(
-                        child: Text(
-                          'No Pokemons found',
-                          style: TextStyle(color: Colors.white),
-                        ),
+                      return const EmptyStateWidget(
+                        message: 'No se encontraron Pokémon',
                       );
                     }
                     return GridView.builder(
@@ -155,8 +127,36 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                builder: (_) => DetailScreen(pokemon: pokemon),
+                              PageRouteBuilder(
+                                transitionDuration: const Duration(
+                                  milliseconds: 700,
+                                ),
+                                reverseTransitionDuration: const Duration(
+                                  milliseconds: 500,
+                                ),
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        DetailScreen(pokemon: pokemon),
+                                transitionsBuilder:
+                                    (
+                                      context,
+                                      animation,
+                                      secondaryAnimation,
+                                      child,
+                                    ) {
+                                      var curve = Curves.easeOutBack;
+                                      var tween = Tween(
+                                        begin: 0.8,
+                                        end: 1.0,
+                                      ).chain(CurveTween(curve: curve));
+                                      return FadeTransition(
+                                        opacity: animation,
+                                        child: ScaleTransition(
+                                          scale: animation.drive(tween),
+                                          child: child,
+                                        ),
+                                      );
+                                    },
                               ),
                             );
                           },

@@ -26,11 +26,12 @@ class PokemonModel extends PokemonEntity {
     final stats = json['stats'] as List?;
     int getStat(String name) {
       if (stats == null) return 0;
-      final statNode = stats.firstWhere(
-        (s) => s['stat'] != null && s['stat']['name'] == name,
-        orElse: () => null,
-      );
-      return statNode != null ? statNode['base_stat'] as int : 0;
+      final filteredList = stats
+          .where((s) => s['stat'] != null && s['stat']['name'] == name)
+          .toList();
+      return filteredList.isNotEmpty
+          ? filteredList.first['base_stat'] as int
+          : 0;
     }
 
     final id = json['id'] as int;
