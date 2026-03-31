@@ -28,7 +28,7 @@ class ErrorStateWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             message,
-            maxLines: 2,
+            maxLines: 5,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
             textScaler: TextScaler.noScaling,
