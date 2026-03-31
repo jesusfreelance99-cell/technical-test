@@ -1,7 +1,5 @@
 # PokeApp (Technical Test)
 
-Una aplicación móvil para explorar el mundo Pokémon construida con Flutter, enfocada en buenas prácticas, escalabilidad y una experiencia de usuario (UX/UI) dinámica y moderna.
-
 **PARA VER EL FUNCIONAMIENTO DE LA APP UN VIDEO EN IOS:** [Ver Video en Drive](https://drive.google.com/drive/folders/1xqSzxsOVB2-QChoM-cmxoGnBeTBkzU9A?usp=sharing)
 
 ##  API Utilizada
