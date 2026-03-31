@@ -54,7 +54,14 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: const Text('Pokédex', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 28)),
+          title: const Text(
+            'Pokédex',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 28,
+            ),
+          ),
           centerTitle: true,
         ),
         body: Column(
@@ -72,12 +79,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   filled: true,
                   fillColor: Colors.white.withValues(alpha: 0.1),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(BorderRadiusTheme.borderRadius),
+                    borderRadius: BorderRadius.circular(
+                      BorderRadiusTheme.borderRadius,
+                    ),
                     borderSide: BorderSide.none,
                   ),
                 ),
                 onSubmitted: (value) {
-                  context.read<PokemonListBloc>().add(SearchPokemonEvent(value));
+                  context.read<PokemonListBloc>().add(
+                    SearchPokemonEvent(value),
+                  );
                 },
               ),
             ),
@@ -92,29 +103,48 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(state.message, style: const TextStyle(color: Colors.redAccent, fontSize: 16)),
+                          Text(
+                            state.message,
+                            style: const TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: 16,
+                            ),
+                          ),
                           const SizedBox(height: 10),
                           ElevatedButton(
-                            onPressed: () => context.read<PokemonListBloc>().add(const GetPokemonsEvent(isRefresh: true)), 
-                            child: const Text('Retry')
+                            onPressed: () => context
+                                .read<PokemonListBloc>()
+                                .add(const GetPokemonsEvent(isRefresh: true)),
+                            child: const Text('Retry'),
                           ),
                         ],
-                      )
+                      ),
                     );
                   } else if (state is PokemonListLoaded) {
                     if (state.pokemons.isEmpty) {
-                      return const Center(child: Text('No Pokemons found', style: TextStyle(color: Colors.white)));
+                      return const Center(
+                        child: Text(
+                          'No Pokemons found',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      );
                     }
                     return GridView.builder(
                       controller: _scrollController,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.65,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 20,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 20,
                       ),
-                      itemCount: state.hasReachedMax ? state.pokemons.length : state.pokemons.length + 2,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.65,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 20,
+                          ),
+                      itemCount: state.hasReachedMax
+                          ? state.pokemons.length
+                          : state.pokemons.length + 2,
                       itemBuilder: (context, index) {
                         if (index >= state.pokemons.length) {
                           return _buildShimmerCard();
@@ -123,7 +153,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         return PokemonCard(
                           pokemon: pokemon,
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => DetailScreen(pokemon: pokemon)));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => DetailScreen(pokemon: pokemon),
+                              ),
+                            );
                           },
                         );
                       },
@@ -157,10 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Shimmer.fromColors(
       baseColor: Colors.white.withValues(alpha: 0.1),
       highlightColor: Colors.white.withValues(alpha: 0.3),
-      child: CardGradientEffectComponent(
-        child: Container(),
-      ),
+      child: CardGradientEffectComponent(child: Container()),
     );
   }
 }
-

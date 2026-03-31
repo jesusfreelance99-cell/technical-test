@@ -31,17 +31,17 @@ class PokemonEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        imageUrl,
-        types,
-        weight,
-        height,
-        hp,
-        attack,
-        defense,
-        specialAttack,
-        specialDefense,
-        speed,
-      ];
+    id,
+    name,
+    imageUrl,
+    types,
+    weight,
+    height,
+    hp,
+    attack,
+    defense,
+    specialAttack,
+    specialDefense,
+    speed,
+  ];
 }

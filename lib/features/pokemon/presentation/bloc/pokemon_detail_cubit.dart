@@ -10,13 +10,16 @@ abstract class PokemonDetailState extends Equatable {
 }
 
 class PokemonDetailInitial extends PokemonDetailState {}
+
 class PokemonDetailLoading extends PokemonDetailState {}
+
 class PokemonDetailLoaded extends PokemonDetailState {
   final PokemonEntity pokemon;
   const PokemonDetailLoaded(this.pokemon);
   @override
   List<Object> get props => [pokemon];
 }
+
 class PokemonDetailError extends PokemonDetailState {
   final String message;
   const PokemonDetailError(this.message);
@@ -27,7 +30,8 @@ class PokemonDetailError extends PokemonDetailState {
 class PokemonDetailCubit extends Cubit<PokemonDetailState> {
   final GetPokemonDetailUseCase getPokemonDetail;
 
-  PokemonDetailCubit({required this.getPokemonDetail}) : super(PokemonDetailInitial());
+  PokemonDetailCubit({required this.getPokemonDetail})
+    : super(PokemonDetailInitial());
 
   Future<void> loadPokemon(String idOrName) async {
     emit(PokemonDetailLoading());

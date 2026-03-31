@@ -8,7 +8,10 @@ class GetPokemonsUseCase {
 
   GetPokemonsUseCase(this.repository);
 
-  Future<Either<Failure, List<PokemonEntity>>> call({int offset = 0, int limit = 20}) async {
+  Future<Either<Failure, List<PokemonEntity>>> call({
+    int offset = 0,
+    int limit = 20,
+  }) async {
     return await repository.getPokemons(offset, limit);
   }
 }

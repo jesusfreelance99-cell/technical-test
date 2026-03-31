@@ -11,7 +11,10 @@ class PokemonRepositoryImpl implements PokemonRepository {
   PokemonRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, List<PokemonEntity>>> getPokemons(int offset, int limit) async {
+  Future<Either<Failure, List<PokemonEntity>>> getPokemons(
+    int offset,
+    int limit,
+  ) async {
     try {
       final remotePokemons = await remoteDataSource.getPokemons(offset, limit);
       return Right(remotePokemons);
@@ -23,7 +26,9 @@ class PokemonRepositoryImpl implements PokemonRepository {
   }
 
   @override
-  Future<Either<Failure, PokemonEntity>> getPokemonDetail(String idOrName) async {
+  Future<Either<Failure, PokemonEntity>> getPokemonDetail(
+    String idOrName,
+  ) async {
     try {
       final remotePokemon = await remoteDataSource.getPokemonDetail(idOrName);
       return Right(remotePokemon);

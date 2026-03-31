@@ -15,16 +15,18 @@ class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
   @override
   Future<List<PokemonModel>> getPokemons(int offset, int limit) async {
     try {
-      final response = await dio.get('https://pokeapi.co/api/v2/pokemon', queryParameters: {
-        'offset': offset,
-        'limit': limit,
-      });
+      final response = await dio.get(
+        'https://pokeapi.co/api/v2/pokemon',
+        queryParameters: {'offset': offset, 'limit': limit},
+      );
       final List results = response.data['results'];
-      
+
       // Concurrently fetch details for all pokemons in the page using Future.wait
-      final futures = results.map((result) => getPokemonDetail(result['name'] as String));
+      final futures = results.map(
+        (result) => getPokemonDetail(result['name'] as String),
+      );
       final details = await Future.wait(futures);
-      
+
       return details;
     } on DioException catch (e) {
       throw ServerException(e.message ?? 'Server error');
@@ -36,7 +38,9 @@ class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
   @override
   Future<PokemonModel> getPokemonDetail(String idOrName) async {
     try {
-      final response = await dio.get('https://pokeapi.co/api/v2/pokemon/$idOrName');
+      final response = await dio.get(
+        'https://pokeapi.co/api/v2/pokemon/$idOrName',
+      );
       return PokemonModel.fromJson(response.data);
     } on DioException catch (e) {
       throw ServerException(e.message ?? 'Server error');

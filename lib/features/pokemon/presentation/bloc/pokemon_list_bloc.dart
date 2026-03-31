@@ -7,26 +7,27 @@ import 'package:pokemonapp/features/pokemon/presentation/bloc/pokemon_list_state
 class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
   final GetPokemonsUseCase getPokemons;
   final GetPokemonDetailUseCase searchPokemon;
-  
+
   int _offset = 0;
   final int _limit = 20;
 
-  PokemonListBloc({
-    required this.getPokemons,
-    required this.searchPokemon,
-  }) : super(PokemonListEmpty()) {
+  PokemonListBloc({required this.getPokemons, required this.searchPokemon})
+    : super(PokemonListEmpty()) {
     on<GetPokemonsEvent>(_onGetPokemons);
     on<SearchPokemonEvent>(_onSearchPokemon);
   }
 
-  Future<void> _onGetPokemons(GetPokemonsEvent event, Emitter<PokemonListState> emit) async {
+  Future<void> _onGetPokemons(
+    GetPokemonsEvent event,
+    Emitter<PokemonListState> emit,
+  ) async {
     if (event.isRefresh) {
       _offset = 0;
       emit(PokemonListEmpty());
     }
-    
+
     final isFirstFetch = state is PokemonListEmpty || event.isRefresh;
-    
+
     if (isFirstFetch) {
       emit(PokemonListLoading());
     }
@@ -39,28 +40,35 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
         _offset += _limit;
         if (state is PokemonListLoaded && !event.isRefresh) {
           final currentPokemons = (state as PokemonListLoaded).pokemons;
-          emit(PokemonListLoaded(
-            pokemons: currentPokemons + pokemons,
-            hasReachedMax: pokemons.isEmpty,
-          ));
+          emit(
+            PokemonListLoaded(
+              pokemons: currentPokemons + pokemons,
+              hasReachedMax: pokemons.isEmpty,
+            ),
+          );
         } else {
-          emit(PokemonListLoaded(
-            pokemons: pokemons,
-            hasReachedMax: pokemons.isEmpty,
-          ));
+          emit(
+            PokemonListLoaded(
+              pokemons: pokemons,
+              hasReachedMax: pokemons.isEmpty,
+            ),
+          );
         }
       },
     );
   }
 
-  Future<void> _onSearchPokemon(SearchPokemonEvent event, Emitter<PokemonListState> emit) async {
+  Future<void> _onSearchPokemon(
+    SearchPokemonEvent event,
+    Emitter<PokemonListState> emit,
+  ) async {
     final query = event.query.trim().toLowerCase();
     if (query.isEmpty) {
       add(const GetPokemonsEvent(isRefresh: true));
       return;
     }
     emit(PokemonListLoading());
-    
+
     final failureOrPokemon = await searchPokemon(query);
     failureOrPokemon.fold(
       (failure) => emit(const PokemonListError(message: 'Pokemon nout found')),

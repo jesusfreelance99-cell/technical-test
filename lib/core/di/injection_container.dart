@@ -12,7 +12,9 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   // Blocs
-  sl.registerFactory(() => PokemonListBloc(getPokemons: sl(), searchPokemon: sl()));
+  sl.registerFactory(
+    () => PokemonListBloc(getPokemons: sl(), searchPokemon: sl()),
+  );
   sl.registerFactory(() => PokemonDetailCubit(getPokemonDetail: sl()));
 
   // Use Cases

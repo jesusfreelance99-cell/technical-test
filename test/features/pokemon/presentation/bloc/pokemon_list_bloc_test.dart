@@ -10,7 +10,9 @@ import 'package:pokemonapp/features/pokemon/presentation/bloc/pokemon_list_event
 import 'package:pokemonapp/features/pokemon/presentation/bloc/pokemon_list_state.dart';
 
 class MockGetPokemonsUseCase extends Mock implements GetPokemonsUseCase {}
-class MockGetPokemonDetailUseCase extends Mock implements GetPokemonDetailUseCase {}
+
+class MockGetPokemonDetailUseCase extends Mock
+    implements GetPokemonDetailUseCase {}
 
 void main() {
   late PokemonListBloc bloc;
@@ -31,35 +33,59 @@ void main() {
   });
 
   const tPokemon = PokemonEntity(
-    id: 1, name: 'bulbasaur', imageUrl: 'url', types: ['grass'], weight: 69, height: 7, 
-    hp: 45, attack: 49, defense: 49, specialAttack: 65, specialDefense: 65, speed: 45,
+    id: 1,
+    name: 'bulbasaur',
+    imageUrl: 'url',
+    types: ['grass'],
+    weight: 69,
+    height: 7,
+    hp: 45,
+    attack: 49,
+    defense: 49,
+    specialAttack: 65,
+    specialDefense: 65,
+    speed: 45,
   );
 
-  test('should emit [PokemonListLoading, PokemonListLoaded] when data is gotten successfully', () async {
-    when(() => mockGetPokemons(offset: any(named: 'offset'), limit: any(named: 'limit')))
-        .thenAnswer((_) async => const Right([tPokemon]));
-    
-    final expected = [
-      PokemonListLoading(),
-      const PokemonListLoaded(pokemons: [tPokemon], hasReachedMax: false),
-    ];
-    
-    expectLater(bloc.stream, emitsInOrder(expected));
-    
-    bloc.add(const GetPokemonsEvent());
-  });
+  test(
+    'should emit [PokemonListLoading, PokemonListLoaded] when data is gotten successfully',
+    () async {
+      when(
+        () => mockGetPokemons(
+          offset: any(named: 'offset'),
+          limit: any(named: 'limit'),
+        ),
+      ).thenAnswer((_) async => const Right([tPokemon]));
 
-  test('should emit [PokemonListLoading, PokemonListError] when getting data fails', () async {
-    when(() => mockGetPokemons(offset: any(named: 'offset'), limit: any(named: 'limit')))
-        .thenAnswer((_) async => const Left(ServerFailure('Server Error')));
-    
-    final expected = [
-      PokemonListLoading(),
-      const PokemonListError(message: 'Server Error'),
-    ];
-    
-    expectLater(bloc.stream, emitsInOrder(expected));
-    
-    bloc.add(const GetPokemonsEvent());
-  });
+      final expected = [
+        PokemonListLoading(),
+        const PokemonListLoaded(pokemons: [tPokemon], hasReachedMax: false),
+      ];
+
+      expectLater(bloc.stream, emitsInOrder(expected));
+
+      bloc.add(const GetPokemonsEvent());
+    },
+  );
+
+  test(
+    'should emit [PokemonListLoading, PokemonListError] when getting data fails',
+    () async {
+      when(
+        () => mockGetPokemons(
+          offset: any(named: 'offset'),
+          limit: any(named: 'limit'),
+        ),
+      ).thenAnswer((_) async => const Left(ServerFailure('Server Error')));
+
+      final expected = [
+        PokemonListLoading(),
+        const PokemonListError(message: 'Server Error'),
+      ];
+
+      expectLater(bloc.stream, emitsInOrder(expected));
+
+      bloc.add(const GetPokemonsEvent());
+    },
+  );
 }
