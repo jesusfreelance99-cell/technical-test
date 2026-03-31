@@ -19,15 +19,16 @@ class PokemonModel extends PokemonEntity {
   factory PokemonModel.fromJson(Map<String, dynamic> json) {
     // Types
     final typesList = json['types'] as List?;
-    final types = typesList?.map((t) => t['type']['name'] as String).toList() ?? [];
+    final types =
+        typesList?.map((t) => t['type']['name'] as String).toList() ?? [];
 
     // Stats
     final stats = json['stats'] as List?;
     int getStat(String name) {
       if (stats == null) return 0;
       final statNode = stats.firstWhere(
-        (s) => s['stat'] != null && s['stat']['name'] == name, 
-        orElse: () => null
+        (s) => s['stat'] != null && s['stat']['name'] == name,
+        orElse: () => null,
       );
       return statNode != null ? statNode['base_stat'] as int : 0;
     }
@@ -37,8 +38,9 @@ class PokemonModel extends PokemonEntity {
     return PokemonModel(
       id: id,
       name: json['name'] ?? '',
-      imageUrl: json['sprites']?['other']?['official-artwork']?['front_default'] 
-             ?? 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$id.png',
+      imageUrl:
+          json['sprites']?['other']?['official-artwork']?['front_default'] ??
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$id.png',
       types: types,
       weight: json['weight'] ?? 0,
       height: json['height'] ?? 0,
@@ -57,21 +59,43 @@ class PokemonModel extends PokemonEntity {
       'name': name,
       'sprites': {
         'other': {
-          'official-artwork': {
-            'front_default': imageUrl,
-          }
-        }
+          'official-artwork': {'front_default': imageUrl},
+        },
       },
-      'types': types.map((t) => {'type': {'name': t}}).toList(),
+      'types': types
+          .map(
+            (t) => {
+              'type': {'name': t},
+            },
+          )
+          .toList(),
       'weight': weight,
       'height': height,
       'stats': [
-        {'base_stat': hp, 'stat': {'name': 'hp'}},
-        {'base_stat': attack, 'stat': {'name': 'attack'}},
-        {'base_stat': defense, 'stat': {'name': 'defense'}},
-        {'base_stat': specialAttack, 'stat': {'name': 'special-attack'}},
-        {'base_stat': specialDefense, 'stat': {'name': 'special-defense'}},
-        {'base_stat': speed, 'stat': {'name': 'speed'}},
+        {
+          'base_stat': hp,
+          'stat': {'name': 'hp'},
+        },
+        {
+          'base_stat': attack,
+          'stat': {'name': 'attack'},
+        },
+        {
+          'base_stat': defense,
+          'stat': {'name': 'defense'},
+        },
+        {
+          'base_stat': specialAttack,
+          'stat': {'name': 'special-attack'},
+        },
+        {
+          'base_stat': specialDefense,
+          'stat': {'name': 'special-defense'},
+        },
+        {
+          'base_stat': speed,
+          'stat': {'name': 'speed'},
+        },
       ],
     };
   }
