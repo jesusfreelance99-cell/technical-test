@@ -35,7 +35,6 @@ class PokemonCard extends StatelessWidget {
                       textAlign: TextAlign.center,
                       textScaler: TextScaler.noScaling,
                       style: textStyle.titleMedium?.copyWith(
-                        color: ColorPaletteTheme.whiteColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -60,9 +59,7 @@ class PokemonCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                           textScaler: TextScaler.noScaling,
-                          style: textStyle.bodySmall?.copyWith(
-                            color: ColorPaletteTheme.whiteColor.withValues(alpha: 0.7),
-                          ),
+                          style: textStyle.bodySmall,
                         ),
                         const SizedBox(width: 4),
                         Text(
@@ -71,9 +68,7 @@ class PokemonCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                           textScaler: TextScaler.noScaling,
-                          style: textStyle.bodySmall?.copyWith(
-                            color: ColorPaletteTheme.whiteColor.withValues(alpha: 0.7),
-                          ),
+                          style: textStyle.bodySmall,
                         ),
                       ],
                     ),
@@ -110,9 +105,18 @@ class PokemonCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: ColorPaletteTheme.whiteColor.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(BorderRadiusTheme.borderRadius),
-        border: Border.all(color: ColorPaletteTheme.whiteColor.withValues(alpha: 0.3)),
+        border: Border.all(
+          color: ColorPaletteTheme.whiteColor.withValues(alpha: 0.6),
+        ),
+        gradient: LinearGradient(
+          begin: AlignmentGeometry.topCenter,
+          end: AlignmentGeometry.bottomCenter,
+          colors: [
+            ColorPaletteTheme.whiteColor.withValues(alpha: 0.2),
+            ColorPaletteTheme.whiteColor.withValues(alpha: 0.1),
+          ],
+        ),
       ),
       child: Text(
         type.toUpperCase(),
@@ -120,10 +124,7 @@ class PokemonCard extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
         textScaler: TextScaler.noScaling,
-        style: textStyle.labelSmall?.copyWith(
-          color: ColorPaletteTheme.whiteColor,
-          fontWeight: FontWeight.bold,
-        ),
+        style: textStyle.labelSmall?.copyWith(fontWeight: FontWeight.bold),
       ),
     );
   }

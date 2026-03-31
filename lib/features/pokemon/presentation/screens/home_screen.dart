@@ -52,11 +52,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
+    final color = Color(0xffff5e00);
     return GradientEffectForScreens(
+      colors: [
+        color, // Azul arriba
+        color.withValues(alpha: 0.0),
+      ],
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
+        centerTitle: true,
         title: Text(
           'Poke App',
           maxLines: 2,
@@ -68,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        centerTitle: true,
       ),
       child: Column(
         children: [
