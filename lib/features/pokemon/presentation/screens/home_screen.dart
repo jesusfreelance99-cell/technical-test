@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemonapp/core/theme/main_theme_export.dart';
@@ -58,6 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         title: Text(
           'Poke App',
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          textScaler: TextScaler.noScaling,
           style: textStyle.displaySmall!.copyWith(
             color: ColorPaletteTheme.primaryColor,
             fontWeight: FontWeight.bold,
@@ -72,13 +77,18 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(16.0),
             child: TextField(
               controller: _searchController,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: ColorPaletteTheme.primaryColor),
               decoration: InputDecoration(
                 hintText: 'Search Pokemon...',
-                hintStyle: const TextStyle(color: Colors.white54),
-                prefixIcon: const Icon(Icons.search, color: Colors.white54),
+                hintStyle: TextStyle(color: ColorPaletteTheme.greyText),
+                prefixIcon: const Icon(
+                  FluentIcons.search_24_filled,
+                  color: ColorPaletteTheme.greyText,
+                ),
                 filled: true,
-                fillColor: Colors.white.withValues(alpha: 0.1),
+                fillColor: ColorPaletteTheme.primaryColor.withValues(
+                  alpha: 0.1,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(
                     BorderRadiusTheme.borderRadius,
@@ -170,8 +180,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildShimmerCard() {
     return Shimmer.fromColors(
-      baseColor: Colors.white.withValues(alpha: 0.1),
-      highlightColor: Colors.white.withValues(alpha: 0.3),
+      baseColor: ColorPaletteTheme.primaryColor.withValues(alpha: 0.1),
+      highlightColor: ColorPaletteTheme.primaryColor.withValues(alpha: 0.3),
       child: CardGradientEffectComponent(child: Container()),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:pokemonapp/core/theme/color_palette_theme.dart';
 import 'package:pokemonapp/features/pokemon/presentation/widgets/custom_buttons.dart';
 
 class ErrorStateWidget extends StatelessWidget {
@@ -22,20 +23,25 @@ class ErrorStateWidget extends StatelessWidget {
           const Icon(
             FluentIcons.warning_24_filled,
             size: 64,
-            color: Colors.redAccent,
+            color: ColorPaletteTheme.errorColor,
           ),
           const SizedBox(height: 16),
           Text(
             message,
-            style: textStyle.titleMedium?.copyWith(color: Colors.redAccent),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
+            textScaler: TextScaler.noScaling,
+            style: textStyle.titleMedium?.copyWith(
+              color: ColorPaletteTheme.errorColor,
+            ),
           ),
           const SizedBox(height: 24),
           CustomPrincipalButton(
             text: 'Volver a intentar',
             isLoading: false,
-            colorButton: Colors.white.withValues(alpha: 0.1),
-            colorText: Colors.white,
+            colorButton: ColorPaletteTheme.whiteColor.withValues(alpha: 0.1),
+            colorText: ColorPaletteTheme.whiteColor,
             onPressed: onRetry,
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemonapp/core/theme/main_theme_export.dart';
 import 'package:pokemonapp/features/pokemon/domain/entities/pokemon_entity.dart';
@@ -29,12 +30,14 @@ class PokemonCard extends StatelessWidget {
                   children: [
                     Text(
                       pokemon.name.toUpperCase(),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      textScaler: TextScaler.noScaling,
                       style: textStyle.titleMedium?.copyWith(
-                        color: Colors.white,
+                        color: ColorPaletteTheme.whiteColor,
                         fontWeight: FontWeight.bold,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 8),
                     // Types badges
@@ -53,17 +56,23 @@ class PokemonCard extends StatelessWidget {
                       children: [
                         Text(
                           '${pokemon.weight / 10} kg',
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 11,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          textScaler: TextScaler.noScaling,
+                          style: textStyle.bodySmall?.copyWith(
+                            color: ColorPaletteTheme.whiteColor.withValues(alpha: 0.7),
                           ),
                         ),
                         const SizedBox(width: 4),
                         Text(
                           '${pokemon.height / 10} m',
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 11,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          textScaler: TextScaler.noScaling,
+                          style: textStyle.bodySmall?.copyWith(
+                            color: ColorPaletteTheme.whiteColor.withValues(alpha: 0.7),
                           ),
                         ),
                       ],
@@ -85,8 +94,8 @@ class PokemonCard extends StatelessWidget {
                 height: 110,
                 placeholder: (context, url) => const SizedBox(height: 110),
                 errorWidget: (context, url, error) => const Icon(
-                  Icons.broken_image,
-                  color: Colors.white54,
+                  FluentIcons.image_off_24_filled,
+                  color: ColorPaletteTheme.greyText,
                   size: 50,
                 ),
               ),
@@ -101,14 +110,18 @@ class PokemonCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.2),
+        color: ColorPaletteTheme.whiteColor.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(BorderRadiusTheme.borderRadius),
-        border: Border.all(color: Colors.white30),
+        border: Border.all(color: ColorPaletteTheme.whiteColor.withValues(alpha: 0.3)),
       ),
       child: Text(
         type.toUpperCase(),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        textAlign: TextAlign.center,
+        textScaler: TextScaler.noScaling,
         style: textStyle.labelSmall?.copyWith(
-          color: Colors.white,
+          color: ColorPaletteTheme.whiteColor,
           fontWeight: FontWeight.bold,
         ),
       ),

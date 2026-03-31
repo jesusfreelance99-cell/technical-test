@@ -13,21 +13,24 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.black, // Dark theme detail
+      backgroundColor: ColorPaletteTheme.black, // Dark theme detail
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: ColorPaletteTheme.transparent,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(
             FluentIcons.arrow_left_24_filled,
-            color: Colors.white,
+            color: ColorPaletteTheme.whiteColor,
           ),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
           IconButton(
-            icon: const Icon(FluentIcons.heart_24_filled, color: Colors.white),
+            icon: const Icon(
+              FluentIcons.heart_24_filled,
+              color: ColorPaletteTheme.whiteColor,
+            ),
             onPressed: () {},
           ),
         ],
@@ -44,7 +47,7 @@ class DetailScreen extends StatelessWidget {
                     _getTypeColor(
                       pokemon.types.isNotEmpty ? pokemon.types.first : 'normal',
                     ).withValues(alpha: 0.5),
-                    Colors.black,
+                    ColorPaletteTheme.black,
                   ],
                   stops: const [0.0, 0.4],
                 ),
@@ -63,8 +66,12 @@ class DetailScreen extends StatelessWidget {
                 ),
                 Text(
                   pokemon.name.toUpperCase(),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  textScaler: TextScaler.noScaling,
                   style: textStyle.displaySmall?.copyWith(
-                    color: Colors.white,
+                    color: ColorPaletteTheme.whiteColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -79,7 +86,9 @@ class DetailScreen extends StatelessWidget {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.05),
+                      color: ColorPaletteTheme.whiteColor.withValues(
+                        alpha: 0.05,
+                      ),
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30),
@@ -90,9 +99,9 @@ class DetailScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           const TabBar(
-                            indicatorColor: Colors.white,
-                            labelColor: Colors.white,
-                            unselectedLabelColor: Colors.white54,
+                            indicatorColor: ColorPaletteTheme.whiteColor,
+                            labelColor: ColorPaletteTheme.whiteColor,
+                            unselectedLabelColor: ColorPaletteTheme.greyText,
                             tabs: [
                               Tab(text: 'About'),
                               Tab(text: 'Stats'),
@@ -107,8 +116,12 @@ class DetailScreen extends StatelessWidget {
                                 Center(
                                   child: Text(
                                     'Coming soon...',
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                    textScaler: TextScaler.noScaling,
                                     style: textStyle.bodyMedium?.copyWith(
-                                      color: Colors.white54,
+                                      color: ColorPaletteTheme.greyText,
                                     ),
                                   ),
                                 ),
@@ -138,8 +151,12 @@ class DetailScreen extends StatelessWidget {
       ),
       child: Text(
         type.toUpperCase(),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        textAlign: TextAlign.center,
+        textScaler: TextScaler.noScaling,
         style: textStyle.labelMedium?.copyWith(
-          color: Colors.white,
+          color: ColorPaletteTheme.whiteColor,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -171,11 +188,14 @@ class DetailScreen extends StatelessWidget {
           const SizedBox(height: 30),
           Text(
             'A beautiful Pokemon from the Kanto region.', // Placeholder description
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            textScaler: TextScaler.noScaling,
             style: textStyle.bodyLarge?.copyWith(
-              color: Colors.white70,
+              color: ColorPaletteTheme.whiteColor.withValues(alpha: 0.7),
               height: 1.5,
             ),
-            textAlign: TextAlign.center,
           ),
         ],
       ),
@@ -190,19 +210,29 @@ class DetailScreen extends StatelessWidget {
   ) {
     return Column(
       children: [
-        Icon(icon, color: Colors.white54),
+        Icon(icon, color: ColorPaletteTheme.greyText),
         const SizedBox(height: 8),
         Text(
           value,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          textScaler: TextScaler.noScaling,
           style: textStyle.titleLarge?.copyWith(
-            color: Colors.white,
+            color: ColorPaletteTheme.whiteColor,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           title,
-          style: textStyle.bodyMedium?.copyWith(color: Colors.white54),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          textScaler: TextScaler.noScaling,
+          style: textStyle.bodyMedium?.copyWith(
+            color: ColorPaletteTheme.greyText,
+          ),
         ),
       ],
     );
@@ -233,15 +263,25 @@ class DetailScreen extends StatelessWidget {
             width: 80,
             child: Text(
               name,
-              style: textStyle.bodyMedium?.copyWith(color: Colors.white54),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              textScaler: TextScaler.noScaling,
+              style: textStyle.bodyMedium?.copyWith(
+                color: ColorPaletteTheme.greyText,
+              ),
             ),
           ),
           SizedBox(
             width: 40,
             child: Text(
               value.toString(),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              textScaler: TextScaler.noScaling,
               style: textStyle.titleMedium?.copyWith(
-                color: Colors.white,
+                color: ColorPaletteTheme.whiteColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -249,9 +289,13 @@ class DetailScreen extends StatelessWidget {
           Expanded(
             child: LinearProgressIndicator(
               value: value / 150.0,
-              backgroundColor: Colors.white.withValues(alpha: 0.1),
+              backgroundColor: ColorPaletteTheme.whiteColor.withValues(
+                alpha: 0.1,
+              ),
               valueColor: AlwaysStoppedAnimation<Color>(
-                value > 50 ? Colors.greenAccent : Colors.redAccent,
+                value > 50
+                    ? ColorPaletteTheme.successColor
+                    : ColorPaletteTheme.errorColor,
               ),
             ),
           ),

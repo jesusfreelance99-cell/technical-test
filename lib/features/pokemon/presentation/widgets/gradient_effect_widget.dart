@@ -54,7 +54,9 @@ class GradientEffectForScreens extends StatelessWidget {
           //2. Efecto de Ruido
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(color: Colors.black.withValues(alpha: 0.1)),
+            child: Container(
+              color: ColorPaletteTheme.black.withValues(alpha: 0.1),
+            ),
           ),
 
           //3. child
@@ -113,7 +115,9 @@ class GradientButtonForScreens extends StatelessWidget {
           //2. Efecto de Ruido
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(color: Colors.black.withValues(alpha: 0.1)),
+            child: Container(
+              color: ColorPaletteTheme.black.withValues(alpha: 0.1),
+            ),
           ),
 
           //3. child
